@@ -1,0 +1,31 @@
+t_category: table with category (of product) information
+	- id: auto-number/primary key, to identify each category
+	- category: varchar(50), name of category
+
+t_client - table with client information
+	- id: auto-number/primary key, to identify each client
+	- name: varchar(50), name of client
+	- NIF: varchar(9), client fiscal number
+	- email: varchar(50), client email
+	- adress: varchar(50), client adress
+	- contact: varchar(15), client contact number
+	- balance: float, total amount the client spent
+	- points: int, number of points cliant have in card
+
+t_invoice - table with invoice information
+	- id: auto-number/primary key, to identify each invoice
+	- idClient: int/foreign key, from t_client
+	- idInvoiceLines: int/foreign key, from t_invoice_lines
+	- total: float, total amount of invoice
+
+t_invoice_lines - table with invoice lines information
+	- id: auto-number/primary key, to identify each invoice_line
+	- idProduct: int/foreign key, from t_product
+	- quantity: int, total units purchased of each product
+	
+t_product - table with product information
+	- id: auto-number/primary key, to identify each product
+	- name: varchar(50), name/description of the product
+	- price: float, price applied to each unit of product
+	- stock: int, total of units available to sell
+	- idCategory: int/foreign key, from t_category
