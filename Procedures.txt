@@ -1,0 +1,133 @@
+Listar a BD:
+SELECT * FROM t_product WHERE Inative = 0 GROUP BY idCategory, name ASC
+
+DELIMITER $$
+CREATE PROCEDURE GetProducts()
+BEGIN
+SELECT * FROM t_product WHERE Inative = 0 GROUP BY idCategory, name ASC;
+END$$
+DELIMITER ;
+
+CALL GetProducts()
+
+------------------------------------------------------------------------------
+
+Listar com categoria:
+SELECT * FROM t_product WHERE Inative = 0 AND idCategory = 2 GROUP BY name ASC
+
+DELIMITER $$
+CREATE PROCEDURE GetProductsCat(IN cat_insert int(11))
+BEGIN
+SELECT * FROM t_product WHERE Inative = 0 AND idCategory = cat_insert GROUP BY name ASC;
+END$$
+DELIMITER ;
+
+ CALL GetProductsCat(int category)
+ 
+------------------------------------------------------------------------------
+
+Selecionar item especifico:
+SELECT * FROM t_product WHERE id = 2
+
+DELIMITER $$
+CREATE PROCEDURE GetProductById(IN prod_insert int(11))
+BEGIN
+SELECT * FROM `t_product` WHERE id = prod_insert;
+END$$
+DELIMITER ;
+
+CALL GetProductById(int id)
+
+------------------------------------------------------------------------------
+
+Selecionar todas as categorias:
+SELECT * FROM t_category
+
+DELIMITER $$
+CREATE PROCEDURE GetCategory()
+BEGIN
+SELECT * FROM t_category;
+END$$
+DELIMITER ;
+
+CALL GetCategory()
+
+------------------------------------------------------------------------------
+
+Update quando tem foto:
+UPDATE t_product SET name='x',price='x',stock='x',photo='x',idCategory='x' WHERE id = 'x'
+
+DELIMITER $$
+CREATE PROCEDURE GetProductById(
+    IN name_insert varchar(50),
+    IN price_insert float(8),
+    IN stock_insert int(11),
+    IN photo_insert varchar(255),
+    IN idCategory_insert int(11),
+    IN id_insert int(11)
+)
+BEGIN
+UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_price ,photo = photo_insert ,idCategory = idCategory_insert WHERE id = id_insert;
+END$$
+DELIMITER ;
+
+CALL UpdateProduct(string name, float price, int stock, string photo, int idCategory, int id)
+
+------------------------------------------------------------------------------
+
+Update quando nao tem foto:
+UPDATE t_product SET name='x',price='x',stock='x', idCategory='x' WHERE id = 'x'
+
+DELIMITER $$
+CREATE PROCEDURE UpdateProductNP(
+    IN name_insert varchar(50),
+    IN price_insert float(8),
+    IN stock_insert int(11),
+    IN idCategory_insert int(11),
+    IN id_insert int(11)
+)
+BEGIN
+UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_price ,idCategory = idCategory_insert WHERE id = id_insert;
+END$$
+DELIMITER ;
+
+CALL UpdateProduct(string name, float price, int stock, int idCategory, int id)
+
+------------------------------------------------------------------------------
+
+Set inative:
+UPDATE t_product SET Inative='x' WHERE id = 'x'
+
+DELIMITER $$
+CREATE PROCEDURE UpdateProductInativeStatus(
+    IN inative_insert int(11),
+    IN id_insert int(11)
+)
+BEGIN
+UPDATE t_product SET Inative= inative_insert WHERE id = id_insert;
+END$$
+DELIMITER ;
+
+CALL UpdateProductInativeStatus(int inative, int id)
+
+------------------------------------------------------------------------------
+
+Add product:
+INSERT INTO t_product(name, price, stock, photo, idCategory) VALUES (name_insert ,price_insert ,stock_insert ,photo_insert ,idCategory_insert);
+
+DELIMITER $$
+CREATE PROCEDURE InsertProduct(
+    IN name_insert varchar(50),
+    IN price_insert float(8),
+    IN stock_insert int(11),
+    IN photo_insert varchar(255),
+    IN idCategory_insert int(11)
+)
+BEGIN
+INSERT INTO `t_product`(`name`, `price`, `stock`, `photo`, `idCategory`) VALUES (name_insert ,price_insert ,stock_insert ,photo_insert ,idCategory_insert);
+END$$
+DELIMITER ;
+
+ CALL InsertProduct(string name, float price, int stock, string photo, int idCategory)
+ 
+------------------------------------------------------------------------------
