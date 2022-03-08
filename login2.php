@@ -1,9 +1,6 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>Vinted Jv</title>
-        <!-- <link href="recursos/style/style.css" rel="stylesheet" type="text/css"> -->
-    </head>
+<?php
+include 'includes/head.php';
+?>
     <body>
         <?php
             //include 'includes/valida.php';
