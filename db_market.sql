@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2022 at 05:28 PM
+-- Generation Time: Mar 08, 2022 at 06:18 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -21,6 +21,44 @@ SET time_zone = "+00:00";
 -- Database: `db_market`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetCategory` ()  BEGIN
+SELECT * FROM t_category;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductById` (IN `prod_insert` INT(11))  BEGIN
+SELECT * FROM `t_product` WHERE id = prod_insert;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProducts` ()  BEGIN
+SELECT * FROM t_product WHERE Inative = 0 GROUP BY idCategory, name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductsCat` (IN `cat_insert` INT(11))  BEGIN
+SELECT * FROM t_product WHERE Inative = 0 AND idCategory = cat_insert GROUP BY name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertProduct` (IN `name_insert` VARCHAR(50), IN `price_insert` FLOAT(8), IN `stock_insert` INT(11), IN `photo_insert` VARCHAR(255), IN `idCategory_insert` INT(11))  BEGIN
+INSERT INTO `t_product`(`name`, `price`, `stock`, `photo`, `idCategory`) VALUES (name_insert ,price_insert ,stock_insert ,photo_insert ,idCategory_insert);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateProduct` (IN `name_insert` VARCHAR(50), IN `price_insert` FLOAT(8), IN `stock_insert` INT(11), IN `photo_insert` VARCHAR(255), IN `idCategory_insert` INT(11), IN `id_insert` INT(11))  BEGIN
+UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_price ,photo = photo_insert ,idCategory = idCategory_insert WHERE id = id_insert;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateProductInativeStatus` (IN `inative_insert` INT(11), IN `id_insert` INT(11))  BEGIN
+UPDATE t_product SET Inative= inative_insert WHERE id = id_insert;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateProductNP` (IN `name_insert` VARCHAR(50), IN `price_insert` FLOAT(8), IN `stock_insert` INT(11), IN `idCategory_insert` INT(11), IN `id_insert` INT(11))  BEGIN
+UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_price ,idCategory = idCategory_insert WHERE id = id_insert;
+END$$
+
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -31,6 +69,19 @@ CREATE TABLE `t_category` (
   `id` int(11) NOT NULL,
   `category` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_category`
+--
+
+INSERT INTO `t_category` (`id`, `category`) VALUES
+(1, 'Fruit'),
+(2, 'Grain'),
+(3, 'Vegetable'),
+(4, 'Protein'),
+(5, 'Dairy'),
+(6, 'Beverage'),
+(7, 'Alcoholic beverage');
 
 -- --------------------------------------------------------
 
@@ -85,8 +136,26 @@ CREATE TABLE `t_product` (
   `name` varchar(50) NOT NULL,
   `price` float NOT NULL,
   `stock` int(11) NOT NULL,
-  `idCategory` int(11) NOT NULL
+  `photo` varchar(255) NOT NULL,
+  `idCategory` int(11) NOT NULL,
+  `Inative` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_product`
+--
+
+INSERT INTO `t_product` (`id`, `name`, `price`, `stock`, `photo`, `idCategory`, `Inative`) VALUES
+(1, 'Banana d\'água', 1.99, 50, '', 1, 0),
+(2, 'Rice White', 1.49, 60, '', 2, 0),
+(3, 'Rice Deluxe White', 2.99, 47, '', 2, 0),
+(4, 'Leeks, Japanese', 1.39, 78, '', 3, 0),
+(5, 'Corn, American grade', 2.49, 24, '', 3, 0),
+(6, 'Chocolate Ice cream Cones x6', 2.49, 36, '', 5, 0),
+(7, 'Modelo, 120ml, x6', 4.59, 12, '', 7, 0),
+(8, 'Grape Juice, Italian', 0.99, 46, '', 6, 0),
+(9, 'Orange Juice 100% pulp', 1.19, 68, '', 6, 0),
+(10, 'Chocolate', 1.99, 5, '', 6, 0);
 
 --
 -- Indexes for dumped tables
@@ -131,7 +200,7 @@ ALTER TABLE `t_product`
 -- AUTO_INCREMENT for table `t_category`
 --
 ALTER TABLE `t_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `t_client`
@@ -155,7 +224,7 @@ ALTER TABLE `t_invoice_lines`
 -- AUTO_INCREMENT for table `t_product`
 --
 ALTER TABLE `t_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
