@@ -14,12 +14,17 @@ include 'includes/head.php';
         else{
             if($uploadOk == 1){
 
-                $stmt = $conn->prepare("CALL InsertProduct(?,?,?,?,?)");
-                $stmt->bind_param("sdisi", $_POST['name'],  $_POST['price'], $_POST['stock'], $photo, $_POST['idCategory']);
-                $stmt->execute();
+                try{
+                    $stmt = $conn->prepare("CALL InsertProduct(?,?,?,?,?)");
+                    $stmt->bind_param("sdisi", $_POST['name'],  $_POST['price'], $_POST['stock'], $photo, $_POST['idCategory']);
+                    $stmt->execute();
+                    $stmt->close();
+                    move_uploaded_file($_FILES["upFile"]["tmp_name"], $target_file);
+                    $conn->close();
 
-                $stmt->close();
-                $conn->close();
+                } catch(Exception){
+                    $conn->close();
+                }
 
             }
         }
