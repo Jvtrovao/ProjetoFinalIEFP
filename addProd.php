@@ -2,12 +2,9 @@
 include 'includes/head.php';
 ?>
     <body>
-    <?php
+<?php
     include 'includes/db_conn.php';
     
-
-        //$sql = 'CALL GetFunction()';
-        //$var = $conn->query($sql);
     if(isset($_FILES["upFile"]["name"])){
         include 'includes/photo_valid.php';
         
@@ -16,18 +13,18 @@ include 'includes/head.php';
         }
         else{
             if($uploadOk == 1){
-                mysqli_query($conn ,"SET @p0='".$_POST['name']."'");
-                mysqli_query($conn ,"SET @p1='".$_POST['price']."'");
-                mysqli_query($conn ,"SET @p2='".$_POST['stock']."'");
-                mysqli_query($conn ,"SET @p3='".$photo."'");
-                mysqli_query($conn ,"SET @p4='".$_POST['idCategory']."'");
 
-                mysqli_multi_query ($conn, "CALL InsertProduct(@p0,@p1,@p2,@p3,@p4)") OR DIE (mysqli_error($conn));
+                $stmt = $conn->prepare("CALL InsertProduct(?,?,?,?,?)");
+                $stmt->bind_param("sdisi", $_POST['name'],  $_POST['price'], $_POST['stock'], $photo, $_POST['idCategory']);
+                $stmt->execute();
+
+                $stmt->close();
+                $conn->close();
+
             }
         }
     }
-    ?>    
-
+?>    
 
     <form action="addProd.php" method="post" enctype="multipart/form-data">
         Name:<input type="text" size="50" name="name" required>
@@ -38,7 +35,27 @@ include 'includes/head.php';
         <br><br>
         Image: <input type="file" name="upFile">
         <br><br>
-        Category:<input type="text" size="10" name="idCategory" required>
+        Category: <select name="idCategory">
+    <?php
+
+            $sql = "CALL GetCategory()";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            echo "<option value='0'>select...</option>";
+
+            if($result->num_rows > 0){
+                while($row = $result->fetch_assoc()){
+                    if($_POST['category'] == $row['id'])
+                        echo "<option value='".$row['id']."' selected>".$row['category']."</option>";
+                    else
+                        echo "<option value='".$row['id']."'>".$row['category']."</option>";
+                }
+            }
+       ?>
+            </select>
         <br><br>
         <input type="submit" value="Insert"> 
         <input type="reset" value="Clear fields">
