@@ -49,7 +49,7 @@ include 'includes/head.php';
             $stmt->execute();
             $result = $stmt->get_result();
 
-            echo "<option value='0'>select...</option>";
+            echo "<option value='0'>All products</option>";
 
             if($result->num_rows > 0){
                 while($row = $result->fetch_assoc()){
