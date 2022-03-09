@@ -1,0 +1,9 @@
+.paddingBetweenCols td {
+    padding: 0 30px;
+    text-align: center;
+}
+
+.DivFlex{
+
+    display: flex;
+}
