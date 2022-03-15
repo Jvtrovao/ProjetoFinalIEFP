@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 08, 2022 at 06:18 PM
+-- Generation Time: Mar 15, 2022 at 03:37 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -34,11 +34,15 @@ SELECT * FROM `t_product` WHERE id = prod_insert;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProducts` ()  BEGIN
-SELECT * FROM t_product WHERE Inative = 0 GROUP BY idCategory, name ASC;
+SELECT product.*, cat.category FROM t_product product INNER JOIN t_category cat on cat.id = product.idCategory GROUP BY idCategory, name ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductsByName` (IN `product_insert` VARCHAR(255))  BEGIN
+SELECT product.*, cat.category FROM t_product product INNER JOIN t_category cat on cat.id = product.idCategory WHERE name LIKE CONCAT(product_insert,'%') GROUP BY idCategory, name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductsCat` (IN `cat_insert` INT(11))  BEGIN
-SELECT * FROM t_product WHERE Inative = 0 AND idCategory = cat_insert GROUP BY name ASC;
+SELECT product.*, cat.category FROM t_product product INNER JOIN t_category cat on cat.id = product.idCategory WHERE product.idCategory = cat_insert GROUP BY name ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `InsertProduct` (IN `name_insert` VARCHAR(50), IN `price_insert` FLOAT(8), IN `stock_insert` INT(11), IN `photo_insert` VARCHAR(255), IN `idCategory_insert` INT(11))  BEGIN
@@ -109,8 +113,7 @@ CREATE TABLE `t_client` (
 CREATE TABLE `t_invoice` (
   `id` int(11) NOT NULL,
   `idClient` int(11) NOT NULL,
-  `idInvoiceLines` int(11) NOT NULL,
-  `total` float NOT NULL
+  `date` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -122,7 +125,8 @@ CREATE TABLE `t_invoice` (
 CREATE TABLE `t_invoice_lines` (
   `id` int(11) NOT NULL,
   `idProduct` int(11) NOT NULL,
-  `quatity` int(11) NOT NULL
+  `quatity` int(11) NOT NULL,
+  `idInvoice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
