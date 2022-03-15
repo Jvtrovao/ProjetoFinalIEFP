@@ -4,6 +4,61 @@
 }
 
 .DivFlex{
-
     display: flex;
+}
+
+.BodyFix{
+    right: -10px;
+}
+
+#title{
+    text-align: center;
+}
+
+
+.MainDiv{
+    display: flex;
+    max-width: 750px;
+    margin: auto;
+    width: 60%;
+    border: 5px;
+    padding: 10px;
+}
+
+
+.DivProducts{
+    text-align: center;
+    position: flex;
+    width: 300px;
+    height: 200px;
+
+    background: #141432;
+    border-radius: 32px;
+}
+
+.DivClients{
+    text-align: center;
+
+    margin: auto;
+    width: 35%;
+    border: 5px;
+    padding: 10px 10px 50px 10px;
+    background: #141432;
+    border-radius: 32px;
+}
+
+.DivProducts h2{
+    color: white;
+}
+
+.DivClients h2{
+    color: white;
+}
+
+#footer{
+    right: -10px;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:30px;
 }
