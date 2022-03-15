@@ -63,7 +63,8 @@ CREATE PROCEDURE GetProductById(
     IN price_insert float(8),
     IN stock_insert int(11),
     IN photo_insert varchar(255),
-    IN idCategory_insert int(11)
+    IN idCategory_insert int(11),
+    IN id_insert int(11)
 )
 BEGIN
 UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_price ,photo = photo_insert ,idCategory = idCategory_insert WHERE id = id_insert;
