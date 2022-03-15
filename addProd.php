@@ -1,8 +1,6 @@
-<?php
-include 'includes/head.php'; 
-include 'includes/db_conn.php';
-?>
+<?php include 'includes/head.php';?>
 <body>
+    include 'includes/db_conn.php';
     <!--form to input product information-->
     <form action="addProd2.php" method="post" enctype="multipart/form-data">
         Name:<input type="text" size="50" name="name" required>
