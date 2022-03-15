@@ -1,19 +1,15 @@
-
+<?php
+include 'includes/head.php';
+?>
 <body>
         <h2>Update Product Information</h2>
         <?php
         
         //estabelecer a conexão á base e dados;
-        include 'include/liga_bd.php';
-        //valida o acesso atraves das variaveis de sessão
-        //include 'include/validar.php';
-
-        //include 'include/validate_photo.php';
-
-        //recieve id of the produc to update fro Consult.php
-        //$id_prod=$_POST['id_prod'];
-
-        $id_prod=1;
+        include 'includes/db_conn.php';
+        
+        //recieve id_prod
+        $id_prod=$_POST['id_prod'];
 
         //mysql operation to get information of product by id from t-product, with procedure registared in DB 
         $sql = "CALL GetProductById(?)";
@@ -44,7 +40,7 @@
 
             Category: <select name="idCategory">
             <?php
-
+                // Obtain list of category to create selectbox
                 $sql2 = "CALL GetCategory()";
 
                 $stmt2 = $conn->prepare($sql2);
