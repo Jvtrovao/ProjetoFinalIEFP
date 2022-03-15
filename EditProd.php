@@ -74,5 +74,8 @@ include 'includes/head.php';
         
         
         <a href="index.html" target="_self">Back to Menu</a>
-    </body>
-</html>
+            </body>
+        <?php
+//incleds footer file
+include 'includes/footer.php';
+?>

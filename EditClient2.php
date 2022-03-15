@@ -24,4 +24,7 @@ include 'includes/head.php';
         ?>
         <p>Will be redirected to Menu</p>
     </body>
-</html>
+<?php
+//incleds footer file
+include 'includes/footer.php';
+?>
