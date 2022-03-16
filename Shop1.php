@@ -8,8 +8,8 @@ include 'includes/head.php';
         //connection to database
         include 'includes/db_conn.php';
 
-        
-        $idClient = 1;
+        //recieve id of client
+        $idClient = $_POST['idClient'];
         ?>
 
 
@@ -22,14 +22,11 @@ include 'includes/head.php';
                 <th>Sub Total</th>
             </tr>
         <?php
-        // Fill table of invoive line
-
         
-
+        //if the id of invoice already exists, go fetch lines
         if (isset($_POST['idInvoice'])){
             
             $stmt1 = $conn->prepare("SELECT tp.name AS nameP, tp.price AS price, til.quatity AS quantity FROM t_invoice_lines til INNER JOIN t_product tp ON til.idProduct = tp.id WHERE til.idInvoice = ?;");
-
             $stmt1->bind_param('i', $_POST['idInvoice']);
             $stmt1->execute();
             $result1 = $stmt1->get_result();
@@ -40,6 +37,7 @@ include 'includes/head.php';
                 }        
             }
             
+            //calculate total and points acumulated
             $idInvoice = $_POST['idInvoice'];
             $total = $_POST['total'];
             $points =  floor($total / 50) * 3;
@@ -47,13 +45,13 @@ include 'includes/head.php';
         }
         else
         {
+            //if invoice still not exists, define total and point for the invoice as 0
             $idInvoice=NULL;
             $total = 0;
             $points = 0;
         }
         ?>
-
-
+    <!--- form for finalization of the shopping --->
     </table><hr>
         <form action="Shop2.php" method="post">
             <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>">
@@ -61,15 +59,14 @@ include 'includes/head.php';
             <input type="hidden" size = "10" name="date" value="<?php echo date("Y-m-d"); ?>">
             Total: <input type="number" size="10" name="value" readonly value="<?php echo $total?>"> €<br><br>
             Points: <input type="number" size="10" name="points" readonly value="<?php echo $points?>"><br><br>
-            NIF: <input type="text" size="9" name="nif" onkeypress="return allowNumbers(event)"><br><br>
             <input type="submit" value="Check out">
         </form>
+    
         <form action="Shop3.php" method="post">
-            <input type="hidden" value="<?php echo $idInvoice;?>">
+            <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>">
             <input type="submit" value="Cancel">
         </form><br><hr><br>
         
-
 <?php
         include 'includes/functionProductsShop.php';
 
