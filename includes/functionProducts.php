@@ -7,14 +7,13 @@ function listProducts($result){
         ?>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Photo</th>
-                <th>idCategory</th>
-                <th>Category</th>
-                <th></th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Category</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <?php
@@ -24,7 +23,7 @@ function listProducts($result){
             echo "<tbody><tr>";
             echo "<td>".$row['id']."</td>";
             echo "<td>".$row['name']."</td>";
-            echo "<td>".$row['price']."€</td>";
+            echo "<td>".$row['price']." €</td>";
             echo "<td>".$row['stock']."</td>";
 
 
@@ -32,25 +31,24 @@ function listProducts($result){
             if($row['photo'] == ''){
                 echo "<td></td>";
             }else{
-                echo "<td><img src='resources/".$row['photo']."' width='100'></td>";
+                echo "<td><img src='resources/".$row['photo']."' width='30'></td>";
             }
-            echo "<td>".$row['idCategory']."</td>";
             echo "<td>".$row['category']."</td>";
             echo "<td>";
             ?>
             <div class="DivFlex"">
                 <form action="EditProd.php" id="form1" method="POST">
                 <input type="hidden" size="20" name="id_prod" value="<?php echo $row['id'] ?>">
-                <input type="submit" value="Edit">
+                <input class="butEdit" type="submit" value="Edit">
                 </form>&nbsp;&nbsp;
                 <form action="StatusProduct.php" id="form1" method="POST">
                 <?php
                 if($row['Inative'] == 0){
                     echo "<input type='hidden' name='id_prod' value='".$row['id']."'>";
-                    echo "<input type='submit' value='Inativate'><br><br>";
+                    echo "<input class='butStatus' type='submit' value='Inativate'><br><br>";
                 }else{
                     echo "<input type='hidden' name='id_prod' value='".$row['id']."'>";
-                    echo "<input type='submit' value='Ativate'><br><br>";
+                    echo "<input class='butStatus' type='submit' value='Ativate'><br><br>";
                 }
                 ?>
                 </form>
