@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2022 at 03:37 PM
+-- Generation Time: Mar 16, 2022 at 08:47 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.11
 
@@ -58,7 +58,7 @@ UPDATE t_product SET Inative= inative_insert WHERE id = id_insert;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateProductNP` (IN `name_insert` VARCHAR(50), IN `price_insert` FLOAT(8), IN `stock_insert` INT(11), IN `idCategory_insert` INT(11), IN `id_insert` INT(11))  BEGIN
-UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_price ,idCategory = idCategory_insert WHERE id = id_insert;
+UPDATE t_product SET name = name_insert , price = price_insert , stock = stock_insert ,idCategory = idCategory_insert WHERE id = id_insert;
 END$$
 
 DELIMITER ;
@@ -103,6 +103,14 @@ CREATE TABLE `t_client` (
   `balance` float NOT NULL,
   `points` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `t_client`
+--
+
+INSERT INTO `t_client` (`id`, `name`, `NIF`, `email`, `adress`, `contact`, `balance`, `points`) VALUES
+(1, 'John', '123456789', 'email@veridico.com', 'Rua qualquer', '111222334', 0, 0),
+(2, 'Zoey', '987654321', 'email2@veridico.com', 'Rua qualquer uma', '22233344455', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -210,7 +218,7 @@ ALTER TABLE `t_category`
 -- AUTO_INCREMENT for table `t_client`
 --
 ALTER TABLE `t_client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `t_invoice`
