@@ -1,8 +1,9 @@
-<?php
-include 'includes/head.php';
-?>
+<?php include 'includes/head.php' ?>
+</head>
     <body>
-        <div class="BodyFix">
+    <?php include 'includes/header.php' ?>
+    <div id="page-container">
+        <div id="content-wrap">
             <h1>Consult Products</h1>
             <?php
             //Includes the connection to the data base and the function to list products
@@ -18,9 +19,10 @@ include 'includes/head.php';
 
             ?>
             <!-- Form that filters what category of items is being listed on the page -->
-            <div class="DivFlex">
+            <div class="DivFlex inputCat">
                 <form action="ConsultProd.php" id="form1" method="POST">
-                    Category: <select name="category" id="cat" onchange="this.form.submit();">
+                    <label for="fcat"><b>Category: </b></label>
+                    <select class="inputCat" name="category" id="fcat" onchange="this.form.submit();">
                         <?php
                             //Calls and execute the procedure that lists all categories
                             $sql = "CALL GetCategory()";
@@ -29,7 +31,7 @@ include 'includes/head.php';
                             $stmt->execute();
                             $result = $stmt->get_result();
 
-                            echo "<option value='0'>All products</option>";
+                            echo "<option value='0' selected>All products</option>";
 
                             //Here it allows the user to decide which category of items is going to be show
                             if($result->num_rows > 0){
@@ -47,11 +49,11 @@ include 'includes/head.php';
 
                 <!-- Form that reads the user input to search for a specific item -->
                 <form action="ConsultProd.php" id="form1" method="POST">
-                    <input type="text" name="search" size="50" maxlength="50">
-                    <input type="submit" value="Search">
+                    <input class="inputS" type="text" placeholder="Search..." name="search" size="50" maxlength="50">
+                    <input type="submit" hidden />
                 </form>
             </div>
-            <h2>Products</h2>
+            <h2 class="title">Products</h2>
             <?php
 
             //If the user put something on the search, it will take priority and search items with that name
@@ -96,7 +98,7 @@ include 'includes/head.php';
             }
             ?>
         </div>
+        <?php include 'includes/footer.php' ?>
+    </div>
     </body>
-<?php
-include 'includes/footer.php';
-?>
+</html>
