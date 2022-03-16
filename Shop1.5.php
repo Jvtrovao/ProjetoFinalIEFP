@@ -9,17 +9,16 @@ include 'includes/head.php';
         include 'includes/db_conn.php';
 
         
-
+        //create data of invoice if it is not set
         if(!isset($_POST['idInvoice'])){
 
-
-            //create regist of invoice - these 2 queries can be made in 1 procedure 
+            //create regist of invoice 
             $sql = "INSERT INTO t_invoice (idClient) VALUES (?);";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('i', $_POST['idClient']);
             if ($stmt->execute()){ 
-  
                 
+                //get the newest id of invoice
                 $sql = "SELECT id FROM t_invoice ORDER BY id DESC LIMIT 1;";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();      
@@ -27,21 +26,19 @@ include 'includes/head.php';
                 if($result->num_rows > 0){
                     $row = $result->fetch_assoc();
                     $idInvoice = $row['id'];
-                }  
-                
+                }                 
             } 
-              
+            
             $stmt->close();
 
         }
         else
         {
-            $idInvoice = $_POST['idInvoice'];
-   
-           
-            //insert invoice line      
+            // if the data of invoice is already set pass its id
+            $idInvoice = $_POST['idInvoice'];   
         }
 
+        //obtain price of the product to be added to invoice line
         $sql2 = "SELECT price FROM t_product WHERE id = ?;";
         $stmt2 = $conn->prepare($sql2);
         $stmt2->bind_param('i', $_POST['idProduct']);
@@ -54,16 +51,15 @@ include 'includes/head.php';
         $stmt2->close();
     
 
-        //case the regist in t_invoice for the invoice already exists
+        //case the regist in t_invoice_lines
         $sql3 = "INSERT INTO t_invoice_lines (idProduct, quatity, idInvoice) VALUES (?, ?, ?);";
         $stmt3 = $conn->prepare($sql3);
         $stmt3->bind_param('iii', $_POST['idProduct'], $_POST['quantity'], $idInvoice);
         $stmt3->execute();
         $stmt3->close();
-        //Send back id invoice and id client to Shop1
         ?>
         
-        
+        <!-- send back the data of shopping back-->
         <form action="Shop1.php" id="ids" method="post">
             <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>">
             <input type="hidden" name="idClient" value="<?php echo $_POST['idClient'];?>">
