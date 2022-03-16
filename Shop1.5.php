@@ -1,8 +1,6 @@
-<?php
-// import header file
-include 'includes/head.php';
-?>
-    <body> 
+<?php include 'includes/head.php' ?>
+</head>
+    <body>
         <?php
 
         //connection to database
@@ -69,12 +67,5 @@ include 'includes/head.php';
         <script type="text/javascript">
             document.getElementById('ids').submit(); // SUBMIT FORM
         </script>
-        <?php
-        
-        ?>
-        
     </body>
-        <?php
-//incleds footer file
-include 'includes/footer.php';
-?>
+</html>
