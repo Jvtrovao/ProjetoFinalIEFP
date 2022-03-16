@@ -8,10 +8,11 @@ include 'includes/head.php';
         //connection to database
         include 'includes/db_conn.php';
 
-        //$idClient = $_POST['idClient'];
+        
         $idClient = 1;
         ?>
- 
+
+
         <h2>Shop</h2>
         <table>
             <tr>
@@ -22,34 +23,45 @@ include 'includes/head.php';
             </tr>
         <?php
         // Fill table of invoive line
+
+        
+
         if (isset($_POST['idInvoice'])){
             
-            $stmt1 = $conn->prepare("SELECT tp.name AS nameP, tp.price AS price, til.quatity AS quatity FROM t_invoice_lines til INNER JOIN t_product tp WHERE til.idInvoice = ?;");
+            $stmt1 = $conn->prepare("SELECT tp.name AS nameP, tp.price AS price, til.quatity AS quantity FROM t_invoice_lines til INNER JOIN t_product tp ON til.idProduct = tp.id WHERE til.idInvoice = ?;");
 
-            $stmt1->bind_param('i', $idClient);
-            if ($stmt1->execute()){      
-                $result1 = $stmt1->get_result();    
-                    if($result1->num_rows > 0){
-                        while($row1 = $result1->fetch_assoc()){
-                            echo "<tr><td>".$row1['nameP']."</td><td>".$row1['price']."</td><td>".$row1['quantity']."</td><td>";
-                            echo $row1['quantity'] * $row1['price']. "</td></tr>";
-                        }        
-                    }
+            $stmt1->bind_param('i', $_POST['idInvoice']);
+            $stmt1->execute();
+            $result1 = $stmt1->get_result();
+            if($result1->num_rows > 0){
+                while($row1 = $result1->fetch_assoc()){
+                    echo "<tr><td>".$row1['nameP']."</td><td>".$row1['price']."</td><td>".$row1['quantity']."</td><td>";
+                    echo $row1['quantity'] * $row1['price']. "</td></tr>";
+                }        
             }
-            else{
-                echo sql1;
-            }
-            $stmt1->close();
-        }    
+            
+            $idInvoice = $_POST['idInvoice'];
+            $total = $_POST['total'];
+            $points =  floor($total / 50) * 3;
+            $stmt1->close(); 
+        }
+        else
+        {
+            $idInvoice=NULL;
+            $total = 0;
+            $points = 0;
+        }
         ?>
+
 
     </table><hr>
         <form action="Shop2.php" method="post">
             <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>">
             <input type="hidden" name="idClient" value="<?php echo $idClient;?>">
-            <input type="hidden" size = "10" name="data" value="<?php echo date("Y-m-d"); ?>">
-            <input type="number" size="10" name="total" readonly value="total<?php ?>">
-            <input type="number" size="10" name="points" readonly value="points<?php ?>">
+            <input type="hidden" size = "10" name="date" value="<?php echo date("Y-m-d"); ?>">
+            Total: <input type="number" size="10" name="value" readonly value="<?php echo $total?>"> €<br><br>
+            Points: <input type="number" size="10" name="points" readonly value="<?php echo $points?>"><br><br>
+            NIF: <input type="text" size="9" name="nif" onkeypress="return allowNumbers(event)"><br><br>
             <input type="submit" value="Check out">
         </form>
         <form action="Shop3.php" method="post">
@@ -122,7 +134,7 @@ include 'includes/head.php';
                 //After getting the result it calls the function that will create the table based on the data received
 
                 $result = $stmt->get_result();
-                listProducts($result, $idClient);
+                listProducts($result, $idClient, $idInvoice, $total, $points);
                 $stmt->close();
 
                 echo "</table>";
@@ -142,7 +154,7 @@ include 'includes/head.php';
                 echo "<table class='paddingBetweenCols'>";
 
                 $result = $stmt->get_result();
-                listProducts($result, $idClient);
+                listProducts($result, $idClient, $idInvoice, $total, $points);
                 $stmt->close();
 
                 echo "</table>";
