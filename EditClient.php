@@ -34,7 +34,7 @@ include 'includes/head.php';
                     NIF:<br><input type="text" name="NIF" size="20" maxlength="9" value="<?php echo $row['NIF']?>" readonly><br><br>
                     Email:<br><input type="text" name="email" size="50" maxlength="50" value="<?php echo $row['email']?>"><br><br>
                     Address:<br><input type="text" name="address" size="50" maxlength="50" value="<?php echo $row['adress']?>"><br><br>
-                    Contact:<br><input type="text" name="contact" size="20" maxlength="10" value="<?php echo $row['contact']?>"><br><br>
+                    Contact:<br><input type="text" name="contact" size="20" maxlength="10" value="<?php echo $row['contact']?>" onkeypress="return allowNumbers(event)"><br><br>
                     Balance:<br><input type="number" name="balance" size="20" min="0"  step="0.01" value="<?php echo $row['balance']?>">€<br><br>
                     Point:<br><input type="number" name="points" size="20" min="0" step="1" value="<?php echo $row['points']?>"><br><br>
                     <?php
