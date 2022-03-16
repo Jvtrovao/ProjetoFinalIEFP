@@ -17,7 +17,7 @@
                 ?>
                 <br/>
                 <h4>You will be redirected shortly...</h4>
-                <input type="button" value="Return to the list" onclick="window.open('ConsultProd.php', '_self')"><br><br>
+                <input class="butStatus" type="button" value="Cancel" onclick="window.open('ConsultProd.php', '_self')"></p><br>
         </div>
         <?php include 'includes/footer.php' ?>
     </div>

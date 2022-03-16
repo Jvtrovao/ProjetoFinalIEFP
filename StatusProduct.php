@@ -46,11 +46,11 @@
                     if($row['Inative'] == 0){
                         echo "<input type='hidden' name='id_prod' value='".$id_prod."'>";
                         echo "<input type='hidden' name='status' value='1'>";
-                        echo "<input type='submit' value='Inativate'><br><br>";
+                        echo "<input class='butEdit' type='submit' value='Inativate'><br><br>";
                     }else{
                         echo "<input type='hidden' name='id_prod' value='".$id_prod."'>";
                         echo "<input type='hidden' name='status' value='0'>";
-                        echo "<input type='submit' value='Ativate'><br><br>";
+                        echo "<input class='butEdit' type='submit' value='Ativate'><br><br>";
                     }
                 ?>
             </form>
