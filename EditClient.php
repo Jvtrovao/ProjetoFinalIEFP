@@ -12,17 +12,10 @@ include 'includes/head.php';
         //$id_client = $_POST['id_cliente'];
         $id_client=1;
 
-        //mysql operation to get information of product by id from t-product, with procedure registared in DB 
-        //$sql = "CALL GetClientById(?)";
-        //$stmt = $conn->prepare($sql);
-        //$stmt->bind_param("i", $id_cliente);
-        //$stmt->execute();
-        
-        //temporal query to check the function
-        $sql ="SELECT * FROM t_client WHERE id= 1";
-
+    
+        //get data of client and fill the form to be changed
+        $stmt = $conn->prepare("SELECT * FROM t_client WHERE id= 1");
         $stmt->execute();
-
         $result = $stmt->get_result();
         
         if($result->num_rows > 0){
