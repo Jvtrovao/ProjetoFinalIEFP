@@ -20,8 +20,8 @@
                     <h2>Clients</h2><br>
                     <input class="butMenu" type="button" value="Add Client" onclick="window.open('addClient.php', '_self')"><br><br>
                     <input class="butMenu" type="button" value="Update Client" onclick="window.open('SelectClient.php', '_self')"><br><br>
-                    <input class="butMenu" type="button" value="Shop" onclick="window.open('Shop1.php', '_self')"><br><br>
-                    <input class="butMenu" type="button" value="Client History" onclick="window.open('History.php', '_self')">
+                    <input class="butMenu" type="button" value="Shop" onclick="window.open('SelectClientShop.php', '_self')"><br><br>
+                    <input class="butMenu" type="button" value="Client History" onclick="window.open('SelectClientHistory.php', '_self')">
                 </div>
             </div>
         </div>

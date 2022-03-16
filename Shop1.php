@@ -1,8 +1,9 @@
-<?php
-// import header file
-include 'includes/head.php';
-?>
-    <body> 
+<?php include 'includes/head.php' ?>
+</head>
+    <body>
+    <?php include 'includes/header.php' ?>
+    <div id="page-container">
+        <div id="content-wrap">
         <?php
 
         //connection to database
@@ -14,7 +15,7 @@ include 'includes/head.php';
 
 
         <h2>Shop</h2>
-        <table>
+        <table class='paddingBetweenCols'>
             <tr>
                 <th>Product</th>
                 <th>Price</th>
@@ -57,14 +58,17 @@ include 'includes/head.php';
             <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>">
             <input type="hidden" name="idClient" value="<?php echo $idClient;?>">
             <input type="hidden" size = "10" name="date" value="<?php echo date("Y-m-d"); ?>">
-            Total: <input type="number" size="10" name="value" readonly value="<?php echo $total?>"> €<br><br>
-            Points: <input type="number" size="10" name="points" readonly value="<?php echo $points?>"><br><br>
-            <input type="submit" value="Check out">
+            <label for="ftotal"><b>Total: </b></label><br>
+            <input class="inputNum" type="number" size="10" name="value" id="ftotal" readonly value="<?php echo $total?>"€>
+            <br><br>
+            <label for="fpoints"><b>Points: </b></label><br>
+            <input class="inputNum" type="number" size="10" name="points" id="fpoints" readonly value="<?php echo $points?>"><br><br>
+            <input class="butEdit" type="submit" value="Check out">
         </form>
     
         <form action="Shop3.php" method="post">
-            <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>">
-            <input type="submit" value="Cancel">
+            <input type="hidden" name="idInvoice" value="<?php echo $idInvoice;?>"><br>
+            <input class="butStatus" type="submit" value="Cancel">
         </form><br><hr><br>
         
 <?php
@@ -80,9 +84,10 @@ include 'includes/head.php';
             ?>
             <!-- Form that filters what category of items is being listed on the page -->
             
-            <div class="DivFlex">
+            <div class="DivFlex inputCat">
                 <form action="Shop1.php" id="form1" method="POST">
-                    Category: <select name="category" id="cat" onchange="this.form.submit();">
+                    <label for="fcat"><b>Category: </b></label>
+                    <select class="inputCat" name="category" id="cat" onchange="this.form.submit();">
                         <?php
                             //Calls and execute the procedure that lists all categories
                             $sql = "CALL GetCategory()";
@@ -109,8 +114,8 @@ include 'includes/head.php';
 
                 <!-- Form that reads the user input to search for a specific item -->
                 <form action="Shop1.php" id="form1" method="POST">
-                    <input type="text" name="search" size="50" maxlength="50">
-                    <input type="submit" value="Search">
+                    <input class="inputS" type="text" name="search" placeholder="Search..." size="50" maxlength="50">
+                    <input type="submit" hidden />
                 </form>
             </div>
             
@@ -158,10 +163,7 @@ include 'includes/head.php';
             }
             ?>
         </div>
-        <br>
-        
+        <?php include 'includes/footer.php' ?>
+    </div>
     </body>
-        <?php
-//incleds footer file
-include 'includes/footer.php';
-?>
+</html>
