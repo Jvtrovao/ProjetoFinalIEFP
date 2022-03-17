@@ -47,7 +47,7 @@ function listProducts($result, $idClient, $idInvoice, $total, $points){
                     if (isset($idInvoice))
                         echo "<input type='hidden' name='idInvoice' value=".$idInvoice.">";
                 ?>
-                Quantity <input class="inputNum inputNum-qtdd" type="number" min="0" required max=<?php echo $row['stock']; ?> name="quantity">
+                Quantity <input class="inputNum inputNum-qtdd" type="number" min="0" required max=<?php echo $row['stock'];?> onkeyup="if(this.value > <?php echo $row['stock']; ?>) this.value = <?php echo $row['stock']; ?>;" name="quantity">
                 <input class="butEdit" type="submit" value="Add">
                 </form>&nbsp;&nbsp;
                 
